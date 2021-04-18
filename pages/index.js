@@ -3,6 +3,7 @@ import { Textarea, Box, Button, Input, IconButton } from "@chakra-ui/react";
 import { v4 as uuidv4 } from "uuid";
 import * as React from "react";
 import { HiOutlineTrash } from "react-icons/hi";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const [notes, setNotes] = React.useState(
@@ -19,8 +20,11 @@ export default function Home() {
     );
   };
 
-  const handleUpdateNote = (id, text) => {
-    const updatedList = { ...notes, [id]: { id: id, text: text } };
+  const handleUpdateNote = (id, text, position) => {
+    const updatedNote = { ...notes[id] };
+    if (text) updatedNote.text = text;
+    if (position) updatedNote.position = position;
+    const updatedList = { ...notes, [id]: updatedNote };
     setNotes(updatedList);
     window.localStorage.setItem("notesEnLS", JSON.stringify(updatedList));
   };
@@ -42,12 +46,6 @@ export default function Home() {
   //     text: "nota 2"
   //   }
   // }
-
-  // const handleDelete = (title) => {
-  //   const newPosts = posts.filter((item) => item.title !== title);
-  //   setPosts(newPosts);
-  //   window.localStorage.setItem("postsEnLS", JSON.stringify(newPosts));
-  // };
 
   return (
     <div>
@@ -71,7 +69,7 @@ export default function Home() {
 
 const AllNotes = ({ notes, onUpdateNote, onDelete }) => {
   return (
-    <Box display="flex">
+    <Box display="flex" position="relative">
       {Object.values(notes).map((note) => {
         console.log(note.id);
         return (
@@ -92,42 +90,47 @@ const Note = ({ note, onUpdateNote, onDelete }) => {
   const [text, setText] = React.useState(note.text);
 
   return (
-    <Box boxShadow="md" minWidth="100px" minHeight="100px" padding="4px">
-      <Textarea
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-          onUpdateNote(note.id, text);
-        }}
-      />
-      <IconButton
-        icon={<HiOutlineTrash />}
-        variant="ghost"
-        size="sm"
-        colorScheme="red"
-        onClick={() => onDelete(note.id)}
-      />
-    </Box>
+    <motion.div
+      onDragEnd={(event, info) => {
+        onUpdateNote(note.id, text, { x: info.point.x, y: info.point.y });
+      }}
+      drag
+      whileDrag={{ zIndex: 1, scale: 1.1 }}
+      style={{
+        position: "absolute",
+        x: note.position ? note.position.x : 0,
+        y: note.position ? note.position.y : 0,
+      }}
+    >
+      <Box
+        backgroundColor="white"
+        boxShadow="lg"
+        overflow="hidden"
+        minWidth="100px"
+        minHeight="100px"
+        borderRadius="md"
+        padding="4"
+        paddingTop="8"
+      >
+        <Textarea
+          value={text}
+          _hover={{ boxShadow: "none" }}
+          _focus={{ boxShadow: "none" }}
+          border="none"
+          resize="none"
+          onChange={(e) => {
+            setText(e.target.value);
+            onUpdateNote(note.id, text);
+          }}
+        />
+        <IconButton
+          icon={<HiOutlineTrash />}
+          variant="ghost"
+          size="sm"
+          colorScheme="red"
+          onClick={() => onDelete(note.id)}
+        />
+      </Box>
+    </motion.div>
   );
 };
-
-const AllPosts = ({ onDelete, onEdit }) => {
-  const posts = JSON.parse(window.localStorage.getItem("postsEnLS") || "[]");
-
-  return (
-    <Box>
-      {posts.map((post, index) => {
-        return (
-          <Box key={index}>
-            {post.title}
-            {post.content}
-
-            <Button onClick={() => onDelete(post.title)}>Delete</Button>
-          </Box>
-        );
-      })}
-    </Box>
-  );
-};
-
-const EditPost = ({ onEdit }) => {};
