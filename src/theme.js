@@ -10,6 +10,7 @@ const theme = extendTheme({
         backgroundColor: "white",
         height: "100%",
         minHeight: "100%",
+        fontFamily: "Mulish, Helvetica, Arial, sans-serif",
       },
       "#__next": {
         height: "100%",
@@ -17,4 +18,5 @@ const theme = extendTheme({
     },
   },
 });
+
 export { theme };

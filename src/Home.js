@@ -1,8 +1,19 @@
 import Head from "next/head";
-import { Textarea, Box, Button, IconButton } from "@chakra-ui/react";
+import {
+  Textarea,
+  Box,
+  Button,
+  IconButton,
+  Text,
+  Heading,
+} from "@chakra-ui/react";
 import { v4 as uuidv4 } from "uuid";
 import * as React from "react";
-import { HiOutlineTrash } from "react-icons/hi";
+import {
+  HiOutlineTrash,
+  HiOutlinePlus,
+  HiArrowNarrowRight,
+} from "react-icons/hi";
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -44,20 +55,61 @@ export default function Home() {
   //   }
   // }
   return (
-    <Box height="100%" ref={pageConstraintsRef}>
+    <Box
+      height="100%"
+      ref={pageConstraintsRef}
+      marginX={["5", "5", "5", "20"]}
+      marginY={["5", "5", "5", "10"]}
+      // border="2px solid blue"
+    >
       <Head>
-        <title>Create Next App</title>
+        <title>Sticky Ari</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box>
-        <Button onClick={handleAddNote}>+</Button>
+        <Text
+          fontSize={["sm", "sm", "md", "2xl"]}
+          color="gray.500"
+          fontWeight="semibold"
+        >
+          StickyAri
+        </Text>
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          marginBottom="5"
+          alignItems="center"
+        >
+          <Box marginX={["2"]} display="flex" alignItems="center">
+            <Text
+              fontSize={["sm", "sm", "md", "lg"]}
+              color="gray.300"
+              paddingX={["2", "2", "2", "5"]}
+            >
+              Create your note here
+            </Text>
+            <HiArrowNarrowRight />
+          </Box>
+          <Box>
+            <Button
+              onClick={handleAddNote}
+              backgroundColor="cyan.300"
+              color="white"
+              borderRadius="xl"
+            >
+              <HiOutlinePlus />
+            </Button>
+          </Box>
+        </Box>
+        <Box>
+          <AllNotes
+            pageConstraintsRef={pageConstraintsRef}
+            notes={notes}
+            onUpdateNote={handleUpdateNote}
+            onDelete={handleDeleteNote}
+          />
+        </Box>
       </Box>
-      <AllNotes
-        pageConstraintsRef={pageConstraintsRef}
-        notes={notes}
-        onUpdateNote={handleUpdateNote}
-        onDelete={handleDeleteNote}
-      />
     </Box>
   );
 }
@@ -100,7 +152,7 @@ const Note = ({ note, onUpdateNote, onDelete, pageConstraintsRef }) => {
       }}
     >
       <Box
-        backgroundColor="white"
+        backgroundColor="yellow.50"
         boxShadow="lg"
         overflow="hidden"
         minWidth="100px"
@@ -120,13 +172,15 @@ const Note = ({ note, onUpdateNote, onDelete, pageConstraintsRef }) => {
             onUpdateNote(note.id, text);
           }}
         />
-        <IconButton
-          icon={<HiOutlineTrash />}
-          variant="ghost"
-          size="sm"
-          colorScheme="red"
-          onClick={() => onDelete(note.id)}
-        />
+        <Box display="flex" justifyContent="flex-end">
+          <IconButton
+            icon={<HiOutlineTrash />}
+            variant="ghost"
+            size="sm"
+            colorScheme="red"
+            onClick={() => onDelete(note.id)}
+          />
+        </Box>
       </Box>
     </motion.div>
   );
