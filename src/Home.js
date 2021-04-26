@@ -59,7 +59,7 @@ export default function Home() {
       height="100%"
       ref={pageConstraintsRef}
       marginX={["5", "5", "5", "20"]}
-      marginY={["5", "5", "5", "10"]}
+      marginY={["6", "6", "10", "10"]}
       // border="2px solid blue"
     >
       <Head>
@@ -68,11 +68,18 @@ export default function Home() {
       </Head>
       <Box>
         <Text
-          fontSize={["sm", "sm", "md", "2xl"]}
-          color="gray.500"
+          fontSize={["xl", "xl", "2xl", "2xl"]}
+          color="gray.700"
           fontWeight="semibold"
         >
           StickyAri
+        </Text>
+        <Text
+          fontSize={["md", "md", "xl", "xl"]}
+          color="gray.500"
+          fontWeight="normal"
+        >
+          (Online Sticky Notes)
         </Text>
         <Box
           display="flex"
@@ -93,7 +100,7 @@ export default function Home() {
           <Box>
             <Button
               onClick={handleAddNote}
-              backgroundColor="cyan.300"
+              backgroundColor="orange.200"
               color="white"
               borderRadius="xl"
             >
@@ -152,10 +159,11 @@ const Note = ({ note, onUpdateNote, onDelete, pageConstraintsRef }) => {
       }}
     >
       <Box
-        backgroundColor="yellow.50"
+        backgroundColor="orange.50"
         boxShadow="lg"
         overflow="hidden"
         minWidth="100px"
+        maxWidth={["200px", "200px", "300px", "300px"]}
         minHeight="100px"
         borderRadius="md"
         padding="4"
@@ -177,7 +185,7 @@ const Note = ({ note, onUpdateNote, onDelete, pageConstraintsRef }) => {
             icon={<HiOutlineTrash />}
             variant="ghost"
             size="sm"
-            colorScheme="red"
+            colorScheme="orange"
             onClick={() => onDelete(note.id)}
           />
         </Box>

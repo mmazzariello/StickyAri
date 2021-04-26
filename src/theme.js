@@ -10,7 +10,7 @@ const theme = extendTheme({
         backgroundColor: "white",
         height: "100%",
         minHeight: "100%",
-        fontFamily: "Mulish, Helvetica, Arial, sans-serif",
+        fontFamily: "Montserrat, sans-serif",
       },
       "#__next": {
         height: "100%",
