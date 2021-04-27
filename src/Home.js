@@ -140,7 +140,6 @@ const AllNotes = ({ notes, onUpdateNote, onDelete, pageConstraintsRef }) => {
 const Note = ({ note, onUpdateNote, onDelete, pageConstraintsRef }) => {
   // const [initialText, setInitialText] = React.useState(note.text);
   const [text, setText] = React.useState(note.text);
-  console.log("ok", text);
   return (
     <motion.div
       onDragEnd={(event, info) => {
@@ -180,8 +179,6 @@ const Note = ({ note, onUpdateNote, onDelete, pageConstraintsRef }) => {
             const newText = e.target.value;
             setText(newText);
             onUpdateNote(note.id, newText);
-            console.log("una letra menos", text);
-            console.log("newText", newText);
           }}
         />
         <Box display="flex" justifyContent="flex-end">
