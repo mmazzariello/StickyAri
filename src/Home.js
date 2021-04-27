@@ -54,19 +54,20 @@ export default function Home() {
   //     text: "nota 2"
   //   }
   // }
+
   return (
     <Box
       height="100%"
       ref={pageConstraintsRef}
       marginX={["5", "5", "5", "20"]}
-      marginY={["6", "6", "10", "10"]}
-      // border="2px solid blue"
+      marginY={["6", "6", "8", "8"]}
     >
       <Head>
         <title>Sticky Ari</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box>
+
+      <Box display="flex" justifyContent="space-between" alignItems="center">
         <Text
           fontSize={["xl", "xl", "2xl", "2xl"]}
           color="gray.700"
@@ -74,48 +75,39 @@ export default function Home() {
         >
           StickyAri
         </Text>
-        <Text
-          fontSize={["md", "md", "xl", "xl"]}
-          color="gray.500"
-          fontWeight="normal"
-        >
-          (Online Sticky Notes)
-        </Text>
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          marginBottom="5"
-          alignItems="center"
-        >
-          <Box marginX={["2"]} display="flex" alignItems="center">
-            <Text
-              fontSize={["sm", "sm", "md", "lg"]}
-              color="gray.300"
-              paddingX={["2", "2", "2", "5"]}
-            >
-              Create your note here
-            </Text>
-            <HiArrowNarrowRight />
-          </Box>
-          <Box>
-            <Button
-              onClick={handleAddNote}
-              backgroundColor="orange.200"
-              color="white"
-              borderRadius="xl"
-            >
-              <HiOutlinePlus />
-            </Button>
-          </Box>
+
+        <Box marginX={["2"]} display="flex" alignItems="center">
+          {Object.keys(notes).length === 0 ? (
+            <>
+              <Text
+                fontSize={["sm", "sm", "md", "lg"]}
+                color="gray.300"
+                paddingX={["2", "2", "2", "5"]}
+              >
+                Create your note here
+              </Text>
+              <HiArrowNarrowRight />
+            </>
+          ) : null}
+
+          <Button
+            onClick={handleAddNote}
+            backgroundColor="orange.200"
+            color="white"
+            borderRadius="xl"
+            marginLeft="8px"
+          >
+            <HiOutlinePlus />
+          </Button>
         </Box>
-        <Box>
-          <AllNotes
-            pageConstraintsRef={pageConstraintsRef}
-            notes={notes}
-            onUpdateNote={handleUpdateNote}
-            onDelete={handleDeleteNote}
-          />
-        </Box>
+      </Box>
+      <Box marginTop="20px">
+        <AllNotes
+          pageConstraintsRef={pageConstraintsRef}
+          notes={notes}
+          onUpdateNote={handleUpdateNote}
+          onDelete={handleDeleteNote}
+        />
       </Box>
     </Box>
   );
